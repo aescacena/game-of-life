@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es2017",
+    "module": "esnext",
+    "jsx": "react",
+    "strict": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+  },
+  "include": ["src", "tests/**/**.test.tsx", "tests/**/**.test.ts"],
+  "exclude": ["src", "tests/e2e-integration"]
+}
