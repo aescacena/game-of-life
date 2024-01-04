@@ -29,10 +29,10 @@ describe("Game of life", () => {
         const game = GameMother.create(world);
 
         // Act
-        const cellState = game.shouldLive(0, 2);
+        const cellState = game.shouldDead(0, 2);
 
         // Assert
-        expect(cellState).toBeFalsy();
+        expect(cellState).toBeTruthy();
     });
 
     it("Should obtain 20 live cells", () =>{

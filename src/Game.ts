@@ -38,6 +38,11 @@ export class Game{
         return (totalLiveNeighbors == 2 || totalLiveNeighbors == 3);
     }
 
+    shouldDead(colum: number, row: number): boolean{
+        const totalLiveNeighbors = this.totalLivingNeighbors(colum, row);
+        return (totalLiveNeighbors < 2 || totalLiveNeighbors > 3);
+    }
+
     private totalLivingNeighbors(colum: number, row: number){
         const possibleColumns  = 3;
         const possibleRows     = 3;
