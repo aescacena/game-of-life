@@ -35,7 +35,7 @@ describe("Game of life", () => {
         expect(cellState).toBeFalsy();
     });
 
-    /*it("Should obtain 20 live cells", () =>{
+    it("Should obtain 20 live cells", () =>{
         // Arrange
         const liveCellsExpect = 20;
         const game            = GameMother.withNumberLiveCells(liveCellsExpect);
@@ -57,5 +57,5 @@ describe("Game of life", () => {
 
         // Assert
         expect(deadCellsExpect).toEqual(numberLiveCells);
-    });*/
+    });
 })

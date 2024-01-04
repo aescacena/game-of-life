@@ -5,13 +5,29 @@ export class Game{
         this.world = world
     }
 
-    /*getTotalLiveCells(): number{
+    getTotalLiveCells(): number{
+        let totalLiveNeighbors = 0;
         for (let i = 0; i < this.world.length; i++) {
             for (let j = 0; j < this.world[i].length; j++) {
-
+                if(this.isAlive(i, j)){
+                    totalLiveNeighbors++;
+                }
             }
         }
-    }*/
+        return totalLiveNeighbors;
+    }
+
+    getTotalDeadCells(): number{
+        let totalLiveNeighbors = 0;
+        for (let i = 0; i < this.world.length; i++) {
+            for (let j = 0; j < this.world[i].length; j++) {
+                if(this.isAlive(i, j)){
+                    totalLiveNeighbors++;
+                }
+            }
+        }
+        return totalLiveNeighbors;
+    }
 
     private isAlive(row: number, colum: number): boolean{
         return this.isPossibleRow(row) && this.isPossibleColum(colum) && this.world[row][colum];
@@ -32,10 +48,10 @@ export class Game{
     }
 
     private isPossibleColum(colum: number): boolean{
-        return ((colum >= 0) && (colum < this.world.length));
+        return ((colum >= 0) && (colum < this.world[0].length));
     }
 
     private isPossibleRow(row: number): boolean{
-        return ((row >= 0) && (row < this.world[0].length));
+        return ((row >= 0) && (row < this.world.length));
     }
 }
