@@ -1,24 +1,31 @@
-export class Game{
-    private world: boolean[][];
+import {Cell} from "./Cell";
+import {CellState} from "./CellState";
 
-    constructor(world: boolean[][]) {
+export class Game{
+    private world: Cell[][];
+
+    constructor(world: Cell[][]) {
         this.world = world
     }
 
     static createAllDead(rows: number, columns: number) {
-        let world: boolean[][] = Array(rows).fill([]).map(() => Array(columns).fill(false));
+        let world: Cell[][] = Array(rows).fill([]).map(() => Array(columns).fill(Cell.createDeadCell()));
         return new Game(world);
     }
 
-    live(row: number, colum: number): void{
-        this.world[row][colum] = true;
+    addCellLive(row: number, colum: number): void{
+        if(this.isPossiblePosition(row, colum)){
+            this.world[row][colum] = Cell.createLiveCell();
+        }
     }
 
-    dead(row: number, colum: number): void{
-        this.world[row][colum] = false;
+    addCellDead(row: number, colum: number): void{
+        if(this.isPossiblePosition(row, colum)){
+            this.world[row][colum] = Cell.createDeadCell();
+        }
     }
 
-    actualState(): boolean[][]{
+    actualState(): Cell[][]{
         return this.world;
     }
 
@@ -28,13 +35,13 @@ export class Game{
             for (let column = 0; column < this.world[0].length; column++){
                 if(this.isDead(row, column)){
                     if(this.shouldRevive(row, column)){
-                        newState.live(row, column);
+                        newState.addCellLive(row, column);
                     }
                 }else {
                     if(this.shouldDead(row, column)){
-                        newState.dead(row, column);
+                        newState.addCellDead(row, column);
                     }else {
-                        newState.live(row, column);
+                        newState.addCellLive(row, column);
                     }
                 }
             }
@@ -67,11 +74,11 @@ export class Game{
     }
 
     private isAlive(row: number, colum: number): boolean{
-        return this.isPossibleRow(row) && this.isPossibleColum(colum) && this.world[row][colum];
+        return this.isPossiblePosition(row, colum) && this.cell(row, colum).isAlive();
     }
 
     private isDead(row: number, colum: number): boolean{
-        return this.isPossibleRow(row) && this.isPossibleColum(colum) && !this.world[row][colum];
+        return this.isPossiblePosition(row, colum) && this.cell(row, colum).isDead();
     }
 
     shouldRevive(row: number, colum: number): boolean{
@@ -103,5 +110,13 @@ export class Game{
 
     private isPossibleRow(row: number): boolean{
         return ((row >= 0) && (row < this.world.length));
+    }
+
+    private isPossiblePosition(row: number, colum: number) {
+        return this.isPossibleRow(row) && this.isPossibleColum(colum);
+    }
+
+    private cell(row: number, colum: number): Cell{
+        return this.world[row][colum];
     }
 }

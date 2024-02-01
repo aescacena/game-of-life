@@ -1,16 +1,16 @@
 import {GameMother} from "./GameMother";
 import {faker} from "@faker-js/faker";
+import {Cell} from "../src/Cell";
 
 describe("Game of life", () => {
     describe("State cells", () => {
         it("Should revive that cell because have 3 neighbors", () =>{
             // Arrange
             const world = [
-                [false, true , false, false],
-                [false, true , false, false],
-                [true , false, false, false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createLiveCell() , Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell() , Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createLiveCell() , Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const game = GameMother.create(world);
 
             // Act
@@ -23,11 +23,10 @@ describe("Game of life", () => {
         it("Should dead that cell", () =>{
             // Arrange
             const world = [
-                [false, true , false, false],
-                [false, true , false, false ],
-                [true , false, false, false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createLiveCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const game = GameMother.create(world);
 
             // Act
@@ -66,17 +65,15 @@ describe("Game of life", () => {
         it("should obtain state with all cells dead, because living cells have no neighbors", () =>{
             // Arrange
             const world = [
-                [false, false, false, false],
-                [false, true , false, false],
-                [false, false, false, true],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createLiveCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const worldExpect = [
-                [false, false, false, false],
-                [false, false, false, false],
-                [false, false, false, false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const game = GameMother.create(world);
 
             // Act
@@ -89,16 +86,15 @@ describe("Game of life", () => {
         it("should obtain state with all cells dead, because living cells only have 1 neighbor", () =>{
             // Arrange
             const world = [
-                [false, false, false, false],
-                [false, true , true , false],
-                [false, false, false, false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createLiveCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const worldExpect = [
-                [false, false, false, false],
-                [false, false, false, false],
-                [false, false, false, false],
-                [false, false, false, false]
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]
             ];
             const game = GameMother.create(world);
 
@@ -112,17 +108,15 @@ describe("Game of life", () => {
         it("should obtain same state, because all cells have 3 neighbors", () =>{
             // Arrange
             const world = [
-                [false, false, false, false],
-                [false, true , true , false],
-                [false, true , true , false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createLiveCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createLiveCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const worldExpect = [
-                [false, false, false, false],
-                [false, true , true , false],
-                [false, true , true , false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createLiveCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createLiveCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const game = GameMother.create(world);
             const numberEvolves = faker.number.int({min: 2, max: 10});
 
@@ -138,19 +132,17 @@ describe("Game of life", () => {
         it("should obtain sames states", () =>{
             // Arrange
             const firstState = [
-                [false, false, false, false],
-                [false, true , false, false],
-                [false, true , false, false],
-                [false, true , false, false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createLiveCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const secondState = [
-                [false, false, false, false],
-                [false, false, false, false],
-                [true , true , true , false],
-                [false, false, false, false],
-                [false, false, false, false]
-            ];
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createLiveCell(), Cell.createLiveCell(), Cell.createLiveCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()],
+                [Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell(), Cell.createDeadCell()]];
             const game = GameMother.create(firstState);
 
             // Act
